@@ -62,7 +62,7 @@ Find classes, methods and descriptions below Don't need to use Point, Tuple and 
 | `int getNumberOfClusters()` | Get number of clusters |
 | `int getNumberOfTuples()` | Get number of tuples |
 
-# Send Us Feedback!
+# Send Your Feedback!
 Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue, pull request or [mail](mailto:orkungdk@outlook.com?subject=GitHub-kMeans%20repository)
 
 # License
