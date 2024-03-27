@@ -63,7 +63,7 @@ Find classes, methods and descriptions below Don't need to use Point, Tuple and 
 | `int getNumberOfTuples()` | Get number of tuples |
 
 # Send Us Feedback!
-Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, email
+Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, [email](orkungdk@outlook.com).
 
 # License
 Code released under GNU General Public License v3.0
