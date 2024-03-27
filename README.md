@@ -15,7 +15,7 @@ Using the k-means algorithm on an Arduino or any other microcontroller platform 
 
 **Embedded Machine Learning:** Implementing k-means on Arduino can serve as an educational tool for learning about machine learning algorithms in embedded systems. It provides hands-on experience with clustering techniques and how they can be applied in resource-constrained environments.
 
-Find classes, methods and descriptions below Don't need to use Point, Tuple and Centroid classes individually. KMeans class manage all of those classes internally;
+Find classes, methods and descriptions below. Don't need to use Point, Tuple and Centroid classes individually. KMeans class handle memory management and manage all of those classes internally. Do not forget to call dispose() method after all;
 
 ## Point:
 | Method | Description |
