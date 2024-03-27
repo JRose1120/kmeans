@@ -20,7 +20,7 @@
 	along with this program.If not, see < https://www.gnu.org/licenses/>.
 */
 
-#include "kmeans.h"
+#include "kMeans.h"
 
 void setup()
 {
