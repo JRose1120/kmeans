@@ -51,16 +51,16 @@ Find classes, methods and descriptions below Don't need to use Point, Tuple and 
 ## KMeans:
 | Method | Description |
 | --- | --- |
-| `KMeans(int number_of_tuples, int number_of_centroids)` | Constructor with # of tuples, # of centroids parameters. Number of tuples and centroids are allocated in c'tor. Number of addTuple() and addCentroid() calls must be comaptible with c'tor parameters. |
-| `void addTuple(float x, float y)` | Add a new tuple to  |
-| `void addCentroid(float x, float y)` | Set abscissa of point |
-| `void setIterationCount(int iteration_count)` | Set ordinate of point |
-| `Tuple** getTuples()` | Set point object of centroid |
-| `Centroid** getCentroids()` | Get cluster Id |
-| `void run()` | Set abscissa of point |
-| `void dispose()` | Set ordinate of point |
-| `int getNumberOfClusters()` | Set point object of centroid |
-| `int getNumberOfTuples()` | Get cluster Id |
+| `KMeans(int number_of_tuples, int number_of_centroids)` | Constructor with # of tuples, # of centroids parameters. Since number of tuples and centroids are allocated in c'tor, addTuple() and addCentroid() calls must be compatible with c'tor parameters. |
+| `void addTuple(float x, float y)` | Add a new tuple |
+| `void addCentroid(float x, float y)` | Add a new centroid |
+| `void setIterationCount(int iteration_count)` | Set number of iterations |
+| `Tuple** getTuples()` | Get tuple array table |
+| `Centroid** getCentroids()` | Get centroid array table |
+| `void run()` | Run the algorithm |
+| `void dispose()` | Release allocated memory |
+| `int getNumberOfClusters()` | Get number of clusters |
+| `int getNumberOfTuples()` | Get number of tuples |
 
 # Send Us Feedback!
 Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, email
