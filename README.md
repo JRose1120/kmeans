@@ -48,6 +48,20 @@ Find classes, methods and descriptions below Don't need to use Point, Tuple and 
 | `void addNumberOfMembers()` | Increase number of member counter of cluster |
 | `void reset()` | Refresh X, Y, number of members belong to cluster |
 
+## KMeans:
+| Method | Description |
+| --- | --- |
+| `KMeans(int number_of_tuples, int number_of_centroids)` | Constructor with # of tuples, # of centroids parameters. Number of tuples and centroids are allocated in c'tor. Number of addTuple() and addCentroid() calls should be same. |
+| `void addTuple(float x, float y)` | Add a new tuple to  |
+| `void addCentroid(float x, float y)` | Set abscissa of point |
+| `void setIterationCount(int iteration_count)` | Set ordinate of point |
+| `Tuple** getTuples()` | Set point object of centroid |
+| `Centroid** getCentroids()` | Get cluster Id |
+| `void run()` | Set abscissa of point |
+| `void dispose()` | Set ordinate of point |
+| `int getNumberOfClusters()` | Set point object of centroid |
+| `int getNumberOfTuples()` | Get cluster Id |
+
 # Send Us Feedback!
 Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, email
 
