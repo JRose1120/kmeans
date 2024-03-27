@@ -15,3 +15,17 @@ Using the k-means algorithm on an Arduino or any other microcontroller platform 
 
 **Embedded Machine Learning:** Implementing k-means on Arduino can serve as an educational tool for learning about machine learning algorithms in embedded systems. It provides hands-on experience with clustering techniques and how they can be applied in resource-constrained environments.
 
+Class 
+| Method | Description |
+| --- | --- |
+| `Point()` | Constructor with initial values |
+| `Point(float x, float y)` | Constructor with X, Y coordinate parameters |
+| `void setX(float x)` | Set abscissa of point |
+| `float getX()` | Get abscissa of point |
+| `float getY()` | Get ordinate of point |
+
+# Send Us Feedback!
+Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, email
+
+# License
+Code released under GNU General Public License v3.0
