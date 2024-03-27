@@ -52,8 +52,8 @@ Find classes, methods and descriptions below Don't need to use Point, Tuple and 
 | Method | Description |
 | --- | --- |
 | `KMeans(int number_of_tuples, int number_of_centroids)` | Constructor with # of tuples, # of centroids parameters. Since number of tuples and centroids are allocated in c'tor, addTuple() and addCentroid() calls must be compatible with c'tor parameters. |
-| `void addTuple(float x, float y)` | Add a new tuple |
-| `void addCentroid(float x, float y)` | Add a new centroid |
+| `void addTuple(float x, float y)` | Add a new tuple with values |
+| `void addCentroid(float x, float y)` | Add a new centroid with initial values|
 | `void setIterationCount(int iteration_count)` | Set number of iterations |
 | `Tuple** getTuples()` | Get tuple array table |
 | `Centroid** getCentroids()` | Get centroid array table |
