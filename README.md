@@ -15,7 +15,7 @@ Using the k-means algorithm on an Arduino or any other microcontroller platform 
 
 **Embedded Machine Learning:** Implementing k-means on Arduino can serve as an educational tool for learning about machine learning algorithms in embedded systems. It provides hands-on experience with clustering techniques and how they can be applied in resource-constrained environments.
 
-Find classes, methods and descriptions below;
+Find classes, methods and descriptions below Don't need to use Point, Tuple and Centroid classes individually. KMeans class manage all of those classes internally;
 
 ## Point:
 | Method | Description |
@@ -23,6 +23,7 @@ Find classes, methods and descriptions below;
 | `Point()` | Constructor with initial values |
 | `Point(float x, float y)` | Constructor with X, Y coordinate parameters |
 | `void setX(float x)` | Set abscissa of point |
+| `void setY(float y)` | Set ordinate of point |
 | `float getX()` | Get abscissa of point |
 | `float getY()` | Get ordinate of point |
 
@@ -33,6 +34,19 @@ Find classes, methods and descriptions below;
 | `setClusterId(int clusterid)` | Set cluster Id where it belongs to |
 | `int getClusterId()` | Get cluster Id where it belongs to |
 | `Point* getPoint()` | Get point object of tuple |
+
+## Centroid:
+| Method | Description |
+| --- | --- |
+| `Centroid(int id, float x, float y)` | Constructor with clusterid, X, Y parameters |
+| `Point* getPoint()` | Get point object of centroid |
+| `void setX(float x)` | Set abscissa of point |
+| `void setY(float y)` | Set ordinate of point |
+| `void setPoint(Point* point)` | Set point object of centroid |
+| `int getId()` | Get cluster Id |
+| `int getNumberOfMembers()` | Get number of members of cluster |
+| `void addNumberOfMembers()` | Increase number of member counter of cluster |
+| `void reset()` | Refresh X, Y, number of members belong to cluster |
 
 # Send Us Feedback!
 Our library is open source for research purposes, and we want to improve it! So let us know by creating a new GitHub issue or pull request, email
