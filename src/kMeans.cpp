@@ -24,8 +24,6 @@
 #include <math.h>
 #include "kmeans.h"
 
-#include <stdio.h>
-
 Tuple::Tuple(float x, float y)
 {
 	_point.setX(x);
