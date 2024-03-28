@@ -44,7 +44,7 @@ void setup()
   kmeans->addTuple(500, 0);
   kmeans->addTuple(510, 0);
 
-  // Add tuples
+  // Add centroids
   // Number of centroids must be same number as provided on c'tor
   kmeans->addCentroid(0, 0);
   kmeans->addCentroid(1, 1);
