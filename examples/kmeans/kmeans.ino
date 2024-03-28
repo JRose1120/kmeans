@@ -24,57 +24,57 @@
 
 void setup()
 {
-	Serial.begin(9600);
+  Serial.begin(9600);
 
-	// Create instance 9 tuples and 3 centroids
-	KMeans* kmeans = new KMeans(9, 3);
+  // Create instance 9 tuples and 3 centroids
+  KMeans* kmeans = new KMeans(9, 3);
 
-	// Set iteration count
-	kmeans->setIterationCount(3);
+  // Set iteration count
+  kmeans->setIterationCount(3);
 
-	// Add tuples
-	// Number of tuples must be same number as provided on c'tor
-	kmeans->addTuple(6, 0);
-	kmeans->addTuple(45, 0);
-	kmeans->addTuple(32, 0);
-	kmeans->addTuple(9, 510);
-	kmeans->addTuple(23, 0);
-	kmeans->addTuple(1, 0);
-	kmeans->addTuple(89, 0);
-	kmeans->addTuple(500, 0);
-	kmeans->addTuple(510, 0);
+  // Add tuples
+  // Number of tuples must be same number as provided on c'tor
+  kmeans->addTuple(6, 0);
+  kmeans->addTuple(45, 0);
+  kmeans->addTuple(32, 0);
+  kmeans->addTuple(9, 510);
+  kmeans->addTuple(23, 0);
+  kmeans->addTuple(1, 0);
+  kmeans->addTuple(89, 0);
+  kmeans->addTuple(500, 0);
+  kmeans->addTuple(510, 0);
 
-	// Add tuples
-	// Number of centroids must be same number as provided on c'tor
-	kmeans->addCentroid(0, 0);
-	kmeans->addCentroid(1, 1);
-	kmeans->addCentroid(14, 17);
+  // Add tuples
+  // Number of centroids must be same number as provided on c'tor
+  kmeans->addCentroid(0, 0);
+  kmeans->addCentroid(1, 1);
+  kmeans->addCentroid(14, 17);
 
-	// Execute algorithm
-	kmeans->run();
+  // Execute algorithm
+  kmeans->run();
 
-	// Get results
-	Tuple** pTuples = kmeans->getTuples();
-	Centroid** pCentroid = kmeans->getCentroids();
+  // Get results
+  Tuple** pTuples = kmeans->getTuples();
+  Centroid** pCentroid = kmeans->getCentroids();
 
-	Serial.printf("Tuples:\n");
-	for (int i = 0; i != kmeans->getNumberOfTuples(); i++) {
-		printf("X=%f\tY=%f\tCluster=%d\n",
-			((Tuple*)pTuples[i])->getPoint()->getX(),
-			((Tuple*)pTuples[i])->getPoint()->getY(),
-			((Tuple*)pTuples[i])->getClusterId());
-	}
+  Serial.printf("Tuples:\n");
+  for (int i = 0; i != kmeans->getNumberOfTuples(); i++) {
+    Serial.printf("X=%f\tY=%f\tCluster=%d\n",
+      ((Tuple*)pTuples[i])->getPoint()->getX(),
+      ((Tuple*)pTuples[i])->getPoint()->getY(),
+      ((Tuple*)pTuples[i])->getClusterId());
+  }
 
-	Serial.printf("\nCentroids:\n");
-	for (int j = 0; j != kmeans->getNumberOfClusters(); j++) {
-		printf("X=%f\tY=%f\tid=%d\n",
-			((Centroid*)pCentroid[j])->getPoint()->getX(),
-			((Centroid*)pCentroid[j])->getPoint()->getY(),
-			((Centroid*)pCentroid[j])->getId());
-	}
+  Serial.printf("\nCentroids:\n");
+  for (int j = 0; j != kmeans->getNumberOfClusters(); j++) {
+    Serial.printf("X=%f\tY=%f\tid=%d\n",
+      ((Centroid*)pCentroid[j])->getPoint()->getX(),
+      ((Centroid*)pCentroid[j])->getPoint()->getY(),
+      ((Centroid*)pCentroid[j])->getId());
+  }
 
-	// Dispose memory
-	kmeans->dispose();
+  // Dispose memory
+  kmeans->dispose();
 }
 
 void loop() {
