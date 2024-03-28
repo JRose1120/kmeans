@@ -24,7 +24,7 @@
 
 void setup()
 {
-  Serial.begin(9600);
+	Serial.begin(9600);
 
 	// Create instance 9 tuples and 3 centroids
 	KMeans* kmeans = new KMeans(9, 3);
