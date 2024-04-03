@@ -1,4 +1,4 @@
-# k-Means with outliers Arduino library
+# k-Means with Outliers Arduino library
 K-Means Arduino library - Unsupervised machine learning clustering method of vector quantization 
 
 Library developed and optimized specific for IoT devices such as Arduino/ESP32 with low memory requirement under embedded machine learning topic.
