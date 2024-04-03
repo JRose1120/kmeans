@@ -45,6 +45,14 @@ Point* Tuple::getPoint()
 	return (&_point);
 }
 
+float Tuple::getEuclidDistance() {
+	return(_euclid_dist);
+}
+
+void Tuple::setEuclidDistance(float dist) {
+	_euclid_dist = dist;
+}
+
 Centroid::Centroid(int id, float x, float y)
 {
 	_id = id;
@@ -72,8 +80,8 @@ int Centroid::getNumberOfMembers() {
 	return(_number_of_members);
 }
 
-void Centroid::addNumberOfMembers() {
-	_number_of_members++;
+void Centroid::setNumberOfMembers(int number_of_members) {
+	_number_of_members = number_of_members;
 }
 
 void Centroid::setPoint(Point* point) {
@@ -119,23 +127,23 @@ Tuple** KMeans::getTuples()
 
 void KMeans::updateTuples()
 {
-	Point* _tuple_point;
-	Point* _centroid_point;
+	Point* tuple_point;
+	Point* centroid_point;
 	float euclid_distance = 0;
 	float minimum_dist = FLT_MAX;
 
 	for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
 	{
-		_tuple_point = ((Tuple*)*(_tuple_list + tup_idx))->getPoint();
+		tuple_point = ((Tuple*)*(_tuple_list + tup_idx))->getPoint();
 
 		for (int cent_idx = 0; cent_idx != _num_of_centroids; cent_idx++)
 		{
-			_centroid_point = ((Centroid*)*(_centroid_list + cent_idx))->getPoint();
+			centroid_point = ((Centroid*)*(_centroid_list + cent_idx))->getPoint();
 
 			// Calculate euclid distance between tuple and centroid
 			euclid_distance = (float)sqrt(
-				pow((_tuple_point->getX() - _centroid_point->getX()), 2) +
-				pow((_tuple_point->getY() - _centroid_point->getY()), 2));
+				pow((tuple_point->getX() - centroid_point->getX()), 2) +
+				pow((tuple_point->getY() - centroid_point->getY()), 2));
 
 			if (minimum_dist > euclid_distance)
 			{
@@ -146,51 +154,121 @@ void KMeans::updateTuples()
 			}
 		}
 
+		// Set Euclid distance of tuple
+		((Tuple*)*(_tuple_list + tup_idx))->setEuclidDistance(minimum_dist);
+
 		minimum_dist = FLT_MAX;
 	}
 }
 
 void KMeans::updateCentroids()
 {
-	Point* _tuple_point;
-	Point* _total;
-	Centroid* _pcentroid;
+	Point* tuple_point;
+	Point* total;
+	Centroid* pcentroid;
 
 	for (int cent_idx = 0; cent_idx != _num_of_centroids; cent_idx++)
 	{
-		((Centroid*)*(_centroid_list + ((Tuple*)*(_tuple_list + cent_idx))->getClusterId()))->reset();
+		((Centroid*)*(_centroid_list + cent_idx))->reset();
 	}
 
 	for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
 	{
-		_pcentroid = ((Centroid*)*(_centroid_list + ((Tuple*)*(_tuple_list + tup_idx))->getClusterId()));
+		pcentroid = ((Centroid*)*(_centroid_list + ((Tuple*)*(_tuple_list + tup_idx))->getClusterId()));
 
-		_tuple_point = ((Tuple*)*(_tuple_list + tup_idx))->getPoint();
-		_total = _pcentroid->getPoint();
+		tuple_point = ((Tuple*)*(_tuple_list + tup_idx))->getPoint();
+		total = pcentroid->getPoint();
 
-		_total->setX(_total->getX() + _tuple_point->getX());
-		_total->setY(_total->getY() + _tuple_point->getY());
+		total->setX(total->getX() + tuple_point->getX());
+		total->setY(total->getY() + tuple_point->getY());
 
-		_pcentroid->setPoint(_total);
-		_pcentroid->addNumberOfMembers();
+		pcentroid->setPoint(total);
+		pcentroid->setNumberOfMembers(pcentroid->getNumberOfMembers() + 1);
 	}
 
+	// Set new coordinates of centroid
 	for (int cent_idx = 0; cent_idx != _num_of_centroids; cent_idx++)
 	{
-		_pcentroid = ((Centroid*)*(_centroid_list + cent_idx));
+		pcentroid = ((Centroid*)*(_centroid_list + cent_idx));
 
-		if (_pcentroid->getNumberOfMembers() > 0) {
-			_pcentroid->setX(
-				_pcentroid->getPoint()->getX() /
-				_pcentroid->getNumberOfMembers()
+		if (pcentroid->getNumberOfMembers() > 0) {
+			pcentroid->setX(
+				pcentroid->getPoint()->getX() /
+				pcentroid->getNumberOfMembers()
 			);
 
-			_pcentroid->setY(
-				_pcentroid->getPoint()->getY() /
-				_pcentroid->getNumberOfMembers()
+			pcentroid->setY(
+				pcentroid->getPoint()->getY() /
+				pcentroid->getNumberOfMembers()
 			);
 		}
 	}
+}
+
+void KMeans::filterOutliers(float sensitivity) {
+	Tuple* tuple = 0;
+	Centroid* current_centroid = 0;
+	Tuple** new_tuple_list = 0;
+	float total_distance = 0;
+	float avg_euclid_dist = 0;
+	float farthest_distance = 0;
+	float border_distance = 0;
+	int new_tuple_index = 0;
+
+	new_tuple_list = (Tuple**) new Tuple * [_num_of_tuples];
+
+	for (int cent_idx = 0; cent_idx != _num_of_centroids; cent_idx++)
+	{
+		current_centroid = ((Centroid*)*(_centroid_list + cent_idx));
+
+		for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
+		{
+			tuple = ((Tuple*)*(_tuple_list + tup_idx));
+
+			// Read average distance value of tuple in cluster
+			if (tuple->getClusterId() == current_centroid->getId()) {
+				total_distance += tuple->getEuclidDistance();
+
+				// Get farthest tuple
+				if (tuple->getEuclidDistance() > farthest_distance) {
+					farthest_distance = tuple->getEuclidDistance();
+				}
+			}
+		}
+
+		avg_euclid_dist = total_distance / current_centroid->getNumberOfMembers();
+
+		// Calculate outlier border
+		border_distance = avg_euclid_dist + ((farthest_distance - avg_euclid_dist) * (1 - (sensitivity / 100)));
+
+		// Filter outliers
+		for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
+		{
+			tuple = ((Tuple*)*(_tuple_list + tup_idx));
+
+			if (tuple->getClusterId() == current_centroid->getId())
+			{
+				if (border_distance > tuple->getEuclidDistance())
+				{
+					*(new_tuple_list + new_tuple_index++) = tuple;
+				}
+				else
+				{
+					delete tuple;
+				}
+			}
+		}
+	}
+
+	delete _tuple_list;
+
+	_tuple_list = new_tuple_list;
+	_num_of_tuples = new_tuple_index;
+
+	border_distance = 0;
+	avg_euclid_dist = 0;
+	farthest_distance = 0;
+	total_distance = 0;
 }
 
 void KMeans::run()
@@ -213,7 +291,7 @@ void KMeans::dispose()
 	int idx = 0;
 
 	// delete tuple objects from memory
-	for (idx = 0; idx != _tuple_index; idx++)
+	for (idx = 0; idx != _num_of_tuples; idx++)
 	{
 		delete* (_tuple_list + idx);
 	}
@@ -234,4 +312,46 @@ int KMeans::getNumberOfTuples() {
 
 Centroid** KMeans::getCentroids() {
 	return(_centroid_list);
+}
+
+Point* KMeans::getClusterUpperBound(int clusterid) {
+	Tuple* tuple_point = 0;
+	Point* point = 0;
+	float upper_bound = 0;
+
+	for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
+	{
+		tuple_point = ((Tuple*)*(_tuple_list + tup_idx));
+
+		if (tuple_point->getClusterId() == clusterid)
+		{
+			if (tuple_point->getPoint()->getX() + tuple_point->getPoint()->getY() > upper_bound) {
+				upper_bound = tuple_point->getPoint()->getX() + tuple_point->getPoint()->getY();
+				point = tuple_point->getPoint();
+			}
+		}
+	}
+
+	return(point);
+}
+
+Point* KMeans::getClusterLowerBound(int clusterid) {
+	Tuple* tuple_point = 0;
+	Point* point = 0;
+	float lower_bound = FLT_MAX;
+
+	for (int tup_idx = 0; tup_idx != _num_of_tuples; tup_idx++)
+	{
+		tuple_point = ((Tuple*)*(_tuple_list + tup_idx));
+
+		if (tuple_point->getClusterId() == clusterid)
+		{
+			if (tuple_point->getPoint()->getX() + tuple_point->getPoint()->getY() < lower_bound) {
+				lower_bound = tuple_point->getPoint()->getX() + tuple_point->getPoint()->getY();
+				point = tuple_point->getPoint();
+			}
+		}
+	}
+
+	return(point);
 }
