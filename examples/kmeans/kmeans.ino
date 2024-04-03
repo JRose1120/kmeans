@@ -59,10 +59,11 @@ void setup()
 
   Serial.printf("Tuples:\n");
   for (int i = 0; i != kmeans->getNumberOfTuples(); i++) {
-    Serial.printf("X=%f\tY=%f\tCluster=%d\n",
+    Serial.printf("X=%f\tY=%f\tCluster=%d\tDistance=%f\n",
       ((Tuple*)pTuples[i])->getPoint()->getX(),
       ((Tuple*)pTuples[i])->getPoint()->getY(),
-      ((Tuple*)pTuples[i])->getClusterId());
+      ((Tuple*)pTuples[i])->getClusterId(),
+      ((Tuple*)pTuples[i])->getEuclidDistance());
   }
 
   Serial.printf("\nCentroids:\n");
@@ -72,6 +73,27 @@ void setup()
       ((Centroid*)pCentroid[j])->getPoint()->getY(),
       ((Centroid*)pCentroid[j])->getId());
   }
+
+  // Filter outliers
+  kmeans->filterOutliers(0);
+
+  pTuples = kmeans->getTuples();
+
+  Serial.printf("\nTuples after outliers filter:\n");
+  for (int i = 0; i != kmeans->getNumberOfTuples(); i++) {
+    Serial.printf("X=%f\tY=%f\tCluster=%d\tDistance=%f\n",
+      ((Tuple*)pTuples[i])->getPoint()->getX(),
+      ((Tuple*)pTuples[i])->getPoint()->getY(),
+      ((Tuple*)pTuples[i])->getClusterId(),
+      ((Tuple*)pTuples[i])->getEuclidDistance());
+  }
+
+  Point* lower_bound = kmeans->getClusterLowerBound(1);
+  Point* upper_bound = kmeans->getClusterUpperBound(1);
+
+  Serial.printf("\nCluster 1:\n");
+  Serial.printf("Lower bound (%f, %f)\n", lower_bound->getX(), lower_bound->getY());
+  Serial.printf("Upper bound (%f, %f)\n", upper_bound->getX(), upper_bound->getY());
 
   // Dispose memory
   kmeans->dispose();
