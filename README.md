@@ -61,7 +61,7 @@ Find classes, methods and descriptions below. Don't need to use Point, Tuple and
 | `void dispose()` | Release allocated memory |
 | `int getNumberOfClusters()` | Get number of clusters |
 | `int getNumberOfTuples()` | Get number of tuples |
-| `void filterOutliers(float sensitivity);` | Filter outliers on clusters. Sensitivity defines how algoritm is sensitive while searching outliers belong to cluster |
+| `void filterOutliers(float sensitivity);` | Filter outliers on clusters. Sensitivity defines how algoritm is sensitive while scanning outliers belong to cluster |
 | `Point* getClusterUpperBound(int clusterid);` | Get upper bound tuple of cluster |
 | `Point* getClusterLowerBound(int clusterid);` | Get upper bound tuple of cluster |
 
