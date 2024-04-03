@@ -1,6 +1,6 @@
 /*
 	K-Means Arduino library - Unsupervised machine learning clustering
-	method of vector quantization 
+	method of vector quantization
 
 	For detailed information https://en.wikipedia.org/wiki/K-means_clustering
 
@@ -67,10 +67,13 @@ public:
 	void setClusterId(int clusterid);
 	int getClusterId();
 	Point* getPoint();
+	float getEuclidDistance();
+	void setEuclidDistance(float dist);
 
 private:
 	Point _point;
 	int _clusterid = 0;
+	float _euclid_dist = 0;
 };
 
 class Centroid
@@ -83,7 +86,7 @@ public:
 	void setPoint(Point* point);
 	int getId();
 	int getNumberOfMembers();
-	void addNumberOfMembers();
+	void setNumberOfMembers(int number_of_members);
 	void reset();
 
 private:
@@ -105,6 +108,9 @@ public:
 	void dispose();
 	int getNumberOfClusters();
 	int getNumberOfTuples();
+	void filterOutliers(float sensitivity);
+	Point* getClusterUpperBound(int clusterid);
+	Point* getClusterLowerBound(int clusterid);
 
 private:
 	void updateCentroids();
