@@ -20,7 +20,7 @@
 	along with this program.If not, see < https://www.gnu.org/licenses/>.
 */
 
-#include <malloc.h>
+#include ,std
 #include <math.h>
 #include "kmeans.h"
 
